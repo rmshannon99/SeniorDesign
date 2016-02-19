@@ -14,7 +14,13 @@ require_once 'TableDisplay.php';
     $statement->execute();
     $question = $statement->fetchall();
     $statement->closeCursor();
-
+    
+// If the student didn't take the test yet
+    if(empty($question)){
+        $MessageResponse = "You didn't take the simulation test yet";
+    }
+    
+    
 // Get number of questions in the results
     $query1 = "SELECT COUNT(*) FROM question_table";
     $statement = $db->prepare($query1);
@@ -50,8 +56,12 @@ require_once 'TableDisplay.php';
 <title>Student Response</title>
 </head>
 <body>
-<a href="http://localhost/Demo/StudentHomePage.php">Home</a><br><br>
+<a href="StudentHomePage.php">Home</a><br><br>
 <h1>Student Response</h1>
+<?php if (!empty($MessageResponse)){?>
+<h2 align="center"><?php echo $MessageResponse; ?></h2>
+
+<?php }else{ ?>
 <h2 align="center"><?php echo "You got ".$numberOfCorrect." out of ".$number." right." ?></h2>
     <?php studentResponse($question); ?><br><br>
     <h2 align="center">Feedback:</h2>
@@ -59,7 +69,8 @@ require_once 'TableDisplay.php';
     <p align="center"><textarea align="middle" rows="10" cols="90" disabled>The Nursing Instructor does not provide a feedback yet.</textarea></p>    
     <?php }else{?>
     <p align="center"><textarea align="middle" rows="10" cols="90" disabled><?php echo $FeedbackDisplay;?></textarea></p>    
-    <?php } ?>
+    <?php }
+}?>
 
 </body>
 </html>

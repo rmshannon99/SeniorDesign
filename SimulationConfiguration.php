@@ -61,9 +61,9 @@ if (isset($_POST['ConfigSubmit'])){
     
 <!--    Display current configuration-->
     
-    <h2 align="center"> Current infant and parent configuration: </h2>;
+    <h2 align="center"> Current infant and parent configuration: </h2>
     <?php CurrentConfigDisplay($ConfigDisplay); ?><br><br>
-    <h3 align="center"> Or you wish to update: </h3>;
+    <h3 align="center"> Or you wish to update: </h3>
     
     
     <!--    This is simulation configuration section-->

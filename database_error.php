@@ -3,7 +3,7 @@
 
 <!-- the head section -->
 <head>
-        <title>Best Cars of Year</title>
+        <title>Database error</title>
         <link rel="stylesheet" type="text/css" href="main.css" />
 </head>
 

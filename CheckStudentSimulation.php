@@ -6,12 +6,12 @@ require_once 'database.php';
 if(!isset($_SESSION)){session_start();}
 
    //Query check to see if the student takes the simulation yet or not
-    $CheckStudentSimulationQuery = "SELECT * FROM student_response WHERE student_response.userID='".$_SESSION['userID']."'";
+    $CheckStudentSimulationQuery = "SELECT * FROM student_response_new WHERE userID='".$_SESSION['userID']."'";
     $statement = $db->prepare($CheckStudentSimulationQuery);
     $statement->execute();
     $CheckStudentSimulation = $statement->fetchall();
     $statement->closeCursor();
-    
+
     //If the student already takes it, display error message and goes back  to StudentHomePage.php
     if(!empty($CheckStudentSimulation)){
         $ErrorMessageCheckStudentSimulation = "You already took the simulation test.";
@@ -21,7 +21,7 @@ if(!isset($_SESSION)){session_start();}
     
     //If not, start the simulation
     else{
-        header("Location: test.php");
+        header("Location: SimulationTest.php");
         
     }
 ?>

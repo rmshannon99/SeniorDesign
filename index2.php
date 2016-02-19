@@ -1,6 +1,7 @@
 <?php
 require_once 'database.php';
-if(!isset($_SESSION)){session_start();}
+session_start();
+
 
 if(!isset($_SESSION['questions'])) {
     $query = "SELECT * FROM question_table";
@@ -20,25 +21,16 @@ if(!isset($_SESSION['questions'])) {
     $statement->closeCursor();
     $_SESSION['number'] = $numberOfQuestions[0];
     
-    
 }
 
 // If the button is clicked, this will record the student's responses to the database.
 if (isset($_POST["submit"])){
     // DO YOUR STUFF 
-    
-    $question = $_SESSION['questions'][$_SESSION['counter']]; 
-    // print_r($question);
-    if($question['CorrectOption']== $_POST['option']){
-        echo '<img src="normal.jpg" atl="Normal Reaction" height="40%" width="20%">';
-    }
-    else{
-        echo '<img src="angry.jpg" atl="Normal Reaction" height="40%" width="20%">';
-    }
+
     // Check to see if index exist
     $index = $_SESSION['counter']; //Index is used for the query below to get QuestionID
         //echo $_POST["option"];
-    $query = "INSERT INTO student_response (ID, userID, QuestionID, ChosenOption, TextResponse) VALUES (Null, '".$_SESSION['userID']."', '".$_SESSION['questions'][$index][0]."', '".$_POST['option']."', '".$_POST['comment']."')";
+    $query = "INSERT INTO student_response (ID, QuestionID, ChosenOption, TextResponse) VALUES (Null, '".$_SESSION['questions'][$index][0]."', '".$_POST['option']."', '".$_POST['comment']."')";
     $statement = $db->prepare($query);
     $statement->execute();
     $statement->closeCursor();   
@@ -58,15 +50,15 @@ if (isset($_POST["submit"])){
 </head>
 <body>
 
-<h1>Welcome, <?php echo $_SESSION['username']; ?></h1>
+<h1>Welcome</h1>
 <?php
     
     //If the counter is less than or equal to the number of questions, it will display the question and options
-    if($_SESSION['counter'] <= $_SESSION['number'] -1){ //because counter starts at 0, that's why number is subtracted 1. If the counter is greater, goes to StudentResponse.php
+    if($_SESSION['counter'] <= $_SESSION['number'] -1){ //because counter starts at 0, that's why number is subtracted 1
     $question = $_SESSION['questions'][$_SESSION['counter']];   
 
 ?>
-<form action="test.php" method="POST">
+<form action="index.php" method="POST">
     Question <?php echo $_SESSION['counter']+1 . ": " . $question["Question"]; ?><br>
 
     A: <input type="radio" name="option" value="<?php echo $question["OptionA"];?>" checked> <?php echo $question["OptionA"]; ?><br>
@@ -87,14 +79,10 @@ if (isset($_POST["submit"])){
     else {
       
         header("Location: StudentResponse.php");
-        
+        session_unset(); // Remove all session variables.
     }
 ?>
 
-<!--    Play infant sound-->
-<audio controls loop hidden="true" autoplay="true">
-    <source src="/audio/crying.mp3" type="audio/mpeg">
-</audio>
 
 </body>
 

@@ -67,13 +67,16 @@ function CurrentConfigDisplay($data){
 
 function StudentInformationDisplay($data){
     $result = '<table align="center" border="1" style="width:30%" cellpadding="10">';
-    $result .= '<th>Student ID</th><th>Student Name</th>';
+    $result .= '<th>Student ID</th><th>Username</th><th>Student Name</th><th>Lets student re-take test</th>';
     
     foreach ($data as $value){
                                    
                 $result .= '<tr>';
                 $result .= '<td align="center">'.$value['userID'].'</td>';
+                $result .= '<td align="center">'.$value['Username'].'</td>';
                 $result .= '<td align="center"><form action="DisplayStudentResponse.php" method="POST"><input type="hidden" name="StudentID" value="'.$value['userID'].'"><input type="submit" value="'.$value['FirstName'].' '.$value['LastName'].'"></form></td>';
+                $result .= '<td align="center"><form action="ResetStudentTest.php" method="POST"><input type="hidden" name="StudentID" value="'.$value['userID'].'"><input type="submit" value="Yes"></form></td>';
+
                 $result .= '</tr>';
                 
                 

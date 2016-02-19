@@ -1,4 +1,7 @@
 <?php
+
+//This file is used to display to provide feedback to students
+
 require_once 'database.php';
 require_once 'TableDisplay.php';
 // Start the session

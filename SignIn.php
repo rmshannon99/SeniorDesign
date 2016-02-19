@@ -7,7 +7,7 @@ require_once 'database.php';
 if (isset($_POST['submit'])){
     if (empty($_POST['username']) || empty($_POST['password'])){
         $error_message = 'User or Password is invalid';
-        include 'Authentication.php';
+        include 'index.php';
         exit();
     }
     else {
@@ -41,7 +41,7 @@ if (isset($_POST['submit'])){
         }
         else{ // if not, go back to index page
             $error_message = 'User or Password is invalid';
-            include 'Authentication.php';
+            include 'index.php';
             exit();
 
         }

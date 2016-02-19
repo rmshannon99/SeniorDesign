@@ -1,5 +1,5 @@
 <?php
-//This file is used to display student result after the instructor select from StudentList.php
+//This file is used to display student result after the instructor selects from StudentList.php
 require_once 'database.php';
 require_once 'TableDisplay.php';
 // Start the session
