@@ -10,7 +10,7 @@
     
     print_r($Scene);
 
-            $CheckQuery = "SELECT * FROM baby_information WHERE SceneID = '3' ";
+            $CheckQuery = "SELECT * FROM baby_information WHERE SceneID = '7' ";
             $statement = $db->prepare($CheckQuery);
             $statement->execute();
             $Check = $statement->fetchall();

@@ -9,7 +9,7 @@ if(isset($_POST['StudentID'])){
     $StudentID =  $_POST['StudentID'];
     
     //This query to remove student answers in student_response table, so that he/she can re-take the test
-    $ResetStudentTestQuery = "DELETE FROM student_response WHERE userID='$StudentID'";
+    $ResetStudentTestQuery = "DELETE FROM student_response_new WHERE userID='$StudentID'";
     $statement = $db->prepare($ResetStudentTestQuery);
     $statement->execute();
     $statement->closeCursor();

@@ -35,7 +35,7 @@ else{
     $statement->closeCursor();
     if(!empty($user_info[0])){ //Check to see if there is a return
         
-    $error_message1 ='Username is already taken! Please choose another username.';
+    $error_message1 ='Username is already taken!  Please choose another username!';
         
     }
     else{ //else create save user's information into the database (user table)
@@ -69,7 +69,7 @@ else{
 }
 
 if ($error_message1 != ''){
-    include 'Authentication.php';
+    include 'index.php';
     exit();
 }
 

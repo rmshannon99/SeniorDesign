@@ -1,9 +1,7 @@
-// New table in SQL
-// Change pointer in SignIn for AdminPage
-// Update script in AccountManagement.php and add onSubmit in TableDisplay.php
-// Add InfantConfiguration.php
-// Update in TableDisplay.php
-//Update Signin.php with userID session
-//Update test.php with userID
-//Update SignUp.php with userID
-// Update StudentRespose.php with query
+<?php
+// prints e.g. 'Current PHP version: 4.1.1'
+echo 'Current PHP version: ' . phpversion();
+
+// prints e.g. '2.0' or nothing if the extension isn't enabled
+echo phpversion('tidy');
+?>

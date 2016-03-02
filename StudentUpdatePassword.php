@@ -7,7 +7,7 @@ if(isset($_POST['submit'])){
     
     //Check to see if new password and re-newpassword are the same or not
     if ($_POST['newPassword'] != $_POST['reNewPassword']){
-        $errorMessage = "Both passwords are not the same";
+        $errorMessage = "The new passwords are mismatched.  Please try again.";
     }
     else{
         // Set new password to the database.

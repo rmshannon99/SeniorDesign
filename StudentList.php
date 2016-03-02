@@ -29,6 +29,8 @@ $statement->closeCursor();
 <h3 align="center">Students List:</h3>
 <h4 align="center">    <?php if (!empty($Message)) { ?>
     <?php echo htmlspecialchars($Message);} ?></h4>
+<h4 align="center">    <?php if (!empty($FeedbackMessage)) { ?>
+    <?php echo htmlspecialchars($FeedbackMessage);} ?></h4>
     <?php StudentInformationDisplay($StudentInformation); ?><br><br>
 
 

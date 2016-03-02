@@ -6,7 +6,7 @@ require_once 'database.php';
 
 if (isset($_POST['submit'])){
     if (empty($_POST['username']) || empty($_POST['password'])){
-        $error_message = 'User or Password is invalid';
+        $error_message = 'Invalid ID or Password.  Please try again.';
         include 'index.php';
         exit();
     }

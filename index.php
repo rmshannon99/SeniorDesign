@@ -28,10 +28,11 @@ if (!isset($email)) { $email = ''; }
     <?php if (!empty($error_message)) { ?>
     <?php echo htmlspecialchars($error_message); ?>
     <?php } ?>    
-    <form action="signIn.php" method="POST">             
+    <form action="SignIn.php" method="POST">             
 
         <input type="text"  name="username" placeholder="Username" ><br><br>
-        <input type="password"  name="password" placeholder="Password" ><br>
+        <input type="password"  name="password" placeholder="Password" >&nbsp;&nbsp;
+        <a href="ForgetPassword.php">Forgot Password?</a><br><br>
         <input name = 'submit' type="submit" value="Log In"><br><br>
 
     </form>
@@ -42,13 +43,15 @@ if (!isset($email)) { $email = ''; }
     <?php if (!empty($error_message1)) { ?>
     <?php echo htmlspecialchars($error_message1); ?>
     <?php } ?>
-    <form action="signUp.php" method="POST">
-                    <input type="text"  name="username" placeholder="Username"> At least 8 characters<br><br>
+    <form action="SignUp.php" method="POST">
+                    <input type="text"  name="username" placeholder="Username"><br><br>
                     <input type="password"  name="password" placeholder="Password"><br><br>
                     <input type="password"  name="repassword" placeholder="Re-Enter Password"><br><br>
                     <input type="text"  name="fname" placeholder="First Name"><br><br>
                     <input type="text"  name="lname" placeholder="Last Name"><br><br>
                     <input type="text"  name="email" placeholder="Email"><br>
+                    Note: All fields are case sensitive. <br><br>
+                    
                     <input type="submit" value ="Sign Up">
         
         

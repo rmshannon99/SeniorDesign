@@ -1,3 +1,9 @@
+<?php
+require_once 'database.php';
+if(!isset($_SESSION)){session_start();}
+
+?>
+
 <!DOCTYPE html>
 <html>
     
@@ -7,7 +13,7 @@
 
 </head>
 <body>
-    
+    <h1><?php echo "Welcome, ".$_SESSION['username'] ?></h1>
 <!--    This error message is from test.php to see whether or not the student already takes the simulation test-->
     <?php if (!empty($ErrorMessageCheckStudentSimulation)) { ?>
     <?php echo htmlspecialchars($ErrorMessageCheckStudentSimulation); ?>

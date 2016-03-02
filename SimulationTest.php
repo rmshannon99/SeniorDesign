@@ -29,24 +29,47 @@ if(!isset($_SESSION['Scenes'])) { //Check to see if the data from the scene_tabl
     
 }
     // If the button is clicked
-    if (isset($_POST['submit'])){
+    if (isset($_POST['submit'])){  
         
         //unset($BabyInformation); //Empty this array
         
         if(isset($_POST['AskMore']) && $_POST['AskMore'] == "AskMore"){
                 //Check if counter+1 == SceneID in baby_information because SceneID starts at 1 while counter starts at 0. If when $Check contains some data, must pull data from baby_information table
                 $SceneID = $_SESSION['Counter']+1;
-                
-                // Record student choice after get baby_information from baby_information table
+
+                                
                 $StudentComment = trim($_POST['comment']); //trim is used to remove white spaces at the beginning and end
                 $StudentComment = str_replace("'", "''", $StudentComment);//Replace an apostrophe with double single quote in order for SQL syntax to work.
                 $_SESSION['SceneOption'] = trim($_SESSION['SceneOption']); //remove spaces at the beginning and end
                 $_SESSION['SceneOption'] = str_replace("'", "''", $_SESSION['SceneOption']); //Replace an apostrophe with double single quote in order for SQL syntax to work.
-                $InsertStudentCommentQuery = "UPDATE student_response_new SET TextResponse = '$StudentComment', ChosenOption = '".$_SESSION['SceneOption']."' WHERE SceneID = $SceneID AND ChosenOption = '".$_SESSION['SceneOption']."'";
-                $statement = $db->prepare($InsertStudentCommentQuery);
-                $statement->execute();
-                $statement->closeCursor();              
                 
+
+                    //Check to see if user has alreadys input something into a same sub_information
+                    $CommentCheckQuery = "SELECT * FROM student_response_new WHERE SceneID= '$SceneID' AND ChosenOption= '".$_SESSION['SceneOption']."'";
+                    $statement = $db->prepare($CommentCheckQuery);
+                    $statement->execute();
+                    $CommentCheck = $statement->fetchall();
+                    $statement->closeCursor();
+                    if (!empty($CommentCheck) && $StudentComment!=''){
+
+                    $InsertStudentCommentQuery = "UPDATE student_response_new SET TextResponse = '$StudentComment' WHERE SceneID = $SceneID AND ChosenOption = '".$_SESSION['SceneOption']."'";
+                    $statement = $db->prepare($InsertStudentCommentQuery);
+                    $statement->execute();
+                    $statement->closeCursor();
+                    }
+                    elseif (!empty($CommentCheck) && $StudentComment==''){
+                        //Do nothing
+                    }
+                    else { //If the sql is empty then insert new row
+
+                    //Record student choice if the scene has sub-information in baby_information               
+
+                    $StudentChoiceQuery = "INSERT INTO student_response_new (ID, SceneID, userID, ChosenOption, TextResponse) VALUES (NULL, $SceneID, '".$_SESSION['userID']."', '".$_SESSION['SceneOption']."', '$StudentComment')";
+                    $statement = $db->prepare($StudentChoiceQuery);
+                    $statement->execute();
+                    $statement->closeCursor();  
+                    }
+              
                 
                 
         }
@@ -54,17 +77,38 @@ if(!isset($_SESSION['Scenes'])) { //Check to see if the data from the scene_tabl
         //If the user clicks MoveOn, it will go to the next scene
         elseif (isset($_POST['AskMore']) && $_POST['AskMore'] == "MoveOn"){
                 //This is a same thing like the if statement above
-                //Check if counter+1 == SceneID in baby_information because SceneID starts at 1 while counter starts at 0. If when $Check contains some data, must pull data from baby_information table
-                                
-                // Record student choice after get baby_information from baby_information table
+                $SceneID = $_SESSION['Counter']+1;
                 $StudentComment = trim($_POST['comment']); //trim is used to remove white spaces at the beginning and end
                 $StudentComment = str_replace("'", "''", $StudentComment);//Replace an apostrophe with double single quote in order for SQL syntax to work.
                 $_SESSION['SceneOption'] = trim($_SESSION['SceneOption']); //remove spaces at the beginning and end
                 $_SESSION['SceneOption'] = str_replace("'", "''", $_SESSION['SceneOption']); //Replace an apostrophe with double single quote in order for SQL syntax to work.
-                $InsertStudentCommentQuery = "UPDATE student_response_new SET TextResponse = '$StudentComment' WHERE userID = '".$_SESSION['userID']."' AND ChosenOption = '".$_SESSION['SceneOption']."'";
+
+                //Check to see if user has alreadys input something into a same sub_information
+                $CommentCheckQuery = "SELECT * FROM student_response_new WHERE SceneID= '$SceneID' AND ChosenOption= '".$_SESSION['SceneOption']."'";
+                $statement = $db->prepare($CommentCheckQuery);
+                $statement->execute();
+                $CommentCheck = $statement->fetchall();
+                $statement->closeCursor();
+                if (!empty($CommentCheck) && $StudentComment!=''){
+                $InsertStudentCommentQuery = "UPDATE student_response_new SET TextResponse = '$StudentComment' WHERE SceneID = $SceneID AND ChosenOption = '".$_SESSION['SceneOption']."'";
                 $statement = $db->prepare($InsertStudentCommentQuery);
                 $statement->execute();
-                $statement->closeCursor(); 
+                $statement->closeCursor();
+                }
+                elseif (!empty($CommentCheck) && $StudentComment==''){
+                        //Do nothing
+                }
+                else { //If the sql is empty then insert new row
+                
+                //Record student choice if the scene has sub-information in baby_information               
+
+                $StudentChoiceQuery = "INSERT INTO student_response_new (ID, SceneID, userID, ChosenOption, TextResponse) VALUES (NULL, $SceneID, '".$_SESSION['userID']."', '".$_SESSION['SceneOption']."', '$StudentComment')";
+                $statement = $db->prepare($StudentChoiceQuery);
+                $statement->execute();
+                $statement->closeCursor();  
+                }                
+
+            
                 $_SESSION['Counter']++;  
         }
         
@@ -84,39 +128,34 @@ if(!isset($_SESSION['Scenes'])) { //Check to see if the data from the scene_tabl
                 $ChosenOption = str_replace("'", "''", $ChosenOption);//Replace an apostrophe with double single quote in order for SQL syntax to work.
                 $BabyInformationQuery = "SELECT * FROM baby_information WHERE SceneOption = '$ChosenOption'";
                 $statement = $db->prepare($BabyInformationQuery);
-                $statement->execute();
-                $BabyInformation = $statement->fetch();
+                $statement->execute();                
+                $BabyInformation = $statement->fetch();                
                 $statement->closeCursor();
                 
                 //Need to store $BabyInformation['SceneOption'] to session so can be used in Update query of Askmore
                 $_SESSION['SceneOption'] = $BabyInformation['SceneOption'];
                 
                 $_SESSION['Counter']--;   
-                
-                //Record student choice if the scene has sub-information in baby_information
-                $StudentComment = trim($_POST['comment']); //trim is used to remove white spaces at the beginning and end
-                $StudentComment = str_replace("'", "''", $StudentComment);//Replace an apostrophe with double single quote in order for SQL syntax to work.
-                $StudentChoiceQuery = "INSERT INTO student_response_new (ID, SceneID, userID, ChosenOption, TextResponse) VALUES (NULL, $SceneID, '".$_SESSION['userID']."', '$ChosenOption', '$StudentComment')";
-                $statement = $db->prepare($StudentChoiceQuery);
-                $statement->execute();
-                $statement->closeCursor();  
+
                 
                 
             }
             else {
                 //Record student choice if the scene has no sub-information from baby_information table
-                $ChosenOption = trim($_POST['option']); //trim is used to remove white spaces at the beginning and end
-                $ChosenOption = str_replace("'", "''", $ChosenOption);//Replace an apostrophe with double single quote in order for SQL syntax to work.
+                $ChosenOption = $_POST['option'];
+                $ChosenOption = trim($_POST['option']); //trim is used to remove white spaces at the beginning and end                
+                $ChosenOption = str_replace("'", "''", $ChosenOption);//Replace an apostrophe with double single quote in order for SQL syntax to work.              
                 $StudentComment = trim($_POST['comment']); //trim is used to remove white spaces at the beginning and end
                 $StudentComment = str_replace("'", "''", $StudentComment);//Replace an apostrophe with double single quote in order for SQL syntax to work.
                 $StudentChoiceQuery = "INSERT INTO student_response_new (ID, SceneID, userID, ChosenOption, TextResponse) VALUES (NULL, $SceneID, '".$_SESSION['userID']."', '$ChosenOption', '$StudentComment')";
                 $statement = $db->prepare($StudentChoiceQuery);
                 $statement->execute();
-                $statement->closeCursor();  
+                $statement->closeCursor();
+                
+                
+                
             }
-        //    $query = "INSERT INTO student_response (ID, userID, QuestionID, ChosenOption, TextResponse) VALUES (Null, '".$_SESSION['userID']."', '".$_SESSION['questions'][$index][0]."', '".$_POST['option']."', '".$_POST['comment']."')";
-
-            
+          
             
             
             $_SESSION['Counter']++;      
@@ -143,13 +182,14 @@ if(!isset($_SESSION['Scenes'])) { //Check to see if the data from the scene_tabl
     <?php
     
     //If the counter is less than or equal to the number of questions, it will display the question and options
-    //if($_SESSION['Counter'] <= $_SESSION['SceneNumber'] -1){ //because counter starts at 0, that's why number is subtracted 1
+    if($_SESSION['Counter'] <= $_SESSION['SceneNumber'] -1){ //because counter starts at 0, that's why number is subtracted 1
     $SceneDisplay = $_SESSION['Scenes'][$_SESSION['Counter']];   
-    //}
+    
     ?>
 
     <form action="SimulationTest.php" method="POST">
-    <?php if (!empty($BabyInformation)){
+        
+    <?php if (!empty($BabyInformation)){            
             echo $BabyInformation['BabyInformation'];?>
         <br><br>
         <input type="radio" name="AskMore" value="AskMore" checked>Ask more question?<br>
@@ -161,26 +201,108 @@ if(!isset($_SESSION['Scenes'])) { //Check to see if the data from the scene_tabl
         
         else{ ?>
     <?php echo $SceneDisplay["SceneInformation"]; ?><br>    
-    <?php if($SceneDisplay["C"]=='') {
-        $SceneRange = range('A','B'); //Range for SceneID = 1 and 4
+    <?php if($SceneDisplay["B"]=='') {
+        $SceneRange = range('A','A'); //Range for SceneID = 1 and 4
             foreach ($SceneRange as $letter){ ?>
-    <input type="radio" name="option" value="<?php echo $SceneDisplay["$letter"];?>" required><?php echo $SceneDisplay["$letter"]; ?><br>
+    <input type="radio" name="option" value="<?php echo htmlspecialchars($SceneDisplay["$letter"]);?>" required><?php echo $SceneDisplay["$letter"]; ?><br>
             
     <?php             
             
         }
+    }   elseif ($SceneDisplay['C']==''){
+        $SceneRange = range('A','B');
+        foreach ($SceneRange as $letter){ ?>
+    <input type="radio" name="option" value="<?php echo htmlspecialchars($SceneDisplay["$letter"]);?>" required><?php echo $SceneDisplay["$letter"]; ?><br>
+    <?php }
     }
         elseif ($SceneDisplay['D']==''){ //Range for SceneID = 2
-        $SceneRange = range('A','C');
+            $SceneRange = range('A','C');
             foreach ($SceneRange as $letter){ ?>
-                <input type="radio" name="option" value="<?php echo $SceneDisplay["$letter"];?>" required><?php echo $SceneDisplay["$letter"]; ?><br>
+                <input type="radio" name="option" value="<?php echo htmlspecialchars($SceneDisplay["$letter"]);?>" required><?php echo $SceneDisplay["$letter"]; ?><br>
     <?php
             }
+        }elseif ($SceneDisplay['E']==''){
+            $SceneRange = range('A','D');
+            foreach ($SceneRange as $letter){ ?>
+                <input type="radio" name="option" value="<?php echo htmlspecialchars($SceneDisplay["$letter"]);?>" required><?php echo $SceneDisplay["$letter"]; ?><br>
+    <?php    }
+        }
+        elseif ($SceneDisplay['F']==''){
+            $SceneRange = range('A','E');
+            foreach ($SceneRange as $letter){ ?>
+                <input type="radio" name="option" value="<?php echo htmlspecialchars($SceneDisplay["$letter"]);?>" required><?php echo $SceneDisplay["$letter"]; ?><br>
+    <?php    }
+        }
+        elseif ($SceneDisplay['G']==''){
+            $SceneRange = range('A','F');
+            foreach ($SceneRange as $letter){ ?>
+                <input type="radio" name="option" value="<?php echo htmlspecialchars($SceneDisplay["$letter"]);?>" required><?php echo $SceneDisplay["$letter"]; ?><br>
+    <?php    }
+        }
+        elseif ($SceneDisplay['H']==''){
+            $SceneRange = range('A','G');
+            foreach ($SceneRange as $letter){ ?>
+                <input type="radio" name="option" value="<?php echo htmlspecialchars($SceneDisplay["$letter"]);?>" required><?php echo $SceneDisplay["$letter"]; ?><br>
+    <?php    }
+        }
+        elseif ($SceneDisplay['I']==''){
+            $SceneRange = range('A','H');
+            foreach ($SceneRange as $letter){ ?>
+                <input type="radio" name="option" value="<?php echo htmlspecialchars($SceneDisplay["$letter"]);?>" required><?php echo $SceneDisplay["$letter"]; ?><br>
+    <?php    }
+        }
+        elseif ($SceneDisplay['J']==''){
+            $SceneRange = range('A','I');
+            foreach ($SceneRange as $letter){ ?>
+                <input type="radio" name="option" value="<?php echo htmlspecialchars($SceneDisplay["$letter"]);?>" required><?php echo $SceneDisplay["$letter"]; ?><br>
+    <?php    }
+        }
+        elseif ($SceneDisplay['K']==''){
+            $SceneRange = range('A','J');
+            foreach ($SceneRange as $letter){ ?>
+                <input type="radio" name="option" value="<?php echo htmlspecialchars($SceneDisplay["$letter"]);?>" required><?php echo $SceneDisplay["$letter"]; ?><br>
+    <?php    }
+        }
+        elseif ($SceneDisplay['L']==''){
+            $SceneRange = range('A','K');
+            foreach ($SceneRange as $letter){ ?>
+                <input type="radio" name="option" value="<?php echo htmlspecialchars($SceneDisplay["$letter"]);?>" required><?php echo $SceneDisplay["$letter"]; ?><br>
+    <?php    }
+        }
+        elseif ($SceneDisplay['M']==''){
+            $SceneRange = range('A','L');
+            foreach ($SceneRange as $letter){ ?>
+                <input type="radio" name="option" value="<?php echo htmlspecialchars($SceneDisplay["$letter"]);?>" required><?php echo $SceneDisplay["$letter"]; ?><br>
+    <?php    }
+        }
+        elseif ($SceneDisplay['N']==''){
+            $SceneRange = range('A','M');
+            foreach ($SceneRange as $letter){ ?>
+                <input type="radio" name="option" value="<?php echo htmlspecialchars($SceneDisplay["$letter"]);?>" required><?php echo $SceneDisplay["$letter"]; ?><br>
+    <?php    }
+        }
+        elseif ($SceneDisplay['O']==''){
+            $SceneRange = range('A','N');
+            foreach ($SceneRange as $letter){ ?>
+                <input type="radio" name="option" value="<?php echo htmlspecialchars($SceneDisplay["$letter"]);?>" required><?php echo $SceneDisplay["$letter"]; ?><br>
+    <?php    }
+        }
+        elseif ($SceneDisplay['P']==''){
+            $SceneRange = range('A','O');
+            foreach ($SceneRange as $letter){ ?>
+                <input type="radio" name="option" value="<?php echo htmlspecialchars($SceneDisplay["$letter"]);?>" required><?php echo $SceneDisplay["$letter"]; ?><br>
+    <?php    }
+        }
+        elseif ($SceneDisplay['Q']==''){
+            $SceneRange = range('A','P');
+            foreach ($SceneRange as $letter){ ?>
+                <input type="radio" name="option" value="<?php echo htmlspecialchars($SceneDisplay["$letter"]);?>" required><?php echo $SceneDisplay["$letter"]; ?><br>
+    <?php    }
         }
         else  { //Range for SceneID = 3
         $SceneRange = range('A','Q');
             foreach ($SceneRange as $letter){ ?>
-                <input type="radio" name="option" value="<?php echo $SceneDisplay["$letter"];?>" required><?php echo $SceneDisplay["$letter"]; ?><br>
+                <input type="radio" name="option" value="<?php echo htmlspecialchars($SceneDisplay["$letter"]);?>" required><?php echo $SceneDisplay["$letter"]; ?><br>
     <?php 
             }
         } ?>
@@ -194,11 +316,19 @@ if(!isset($_SESSION['Scenes'])) { //Check to see if the data from the scene_tabl
     
     
     </form>
+<?php
+    }
+    else {
+      
+        header("Location: StudentResponse.php");
+        
+    }
+?>
 
 <!--    Play infant sound-->
-<audio controls loop hidden="true" autoplay="true">
+<!--<audio controls loop hidden="true" autoplay="true">
     <source src="./audio/crying.mp3" type="audio/mpeg">
-</audio>
+</audio>-->
 
 </body>
 
