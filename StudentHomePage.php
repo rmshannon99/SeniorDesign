@@ -9,20 +9,66 @@ if(!isset($_SESSION)){session_start();}
     
 <head>
 <meta charset="UTF-8">
-<title>Authentication</title>
-
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="css/studenthome.css">
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
+        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<title>Student Home</title>
 </head>
-<body>
-    <h1><?php echo "Welcome, ".$_SESSION['username'] ?></h1>
-<!--    This error message is from test.php to see whether or not the student already takes the simulation test-->
-    <?php if (!empty($ErrorMessageCheckStudentSimulation)) { ?>
-    <?php echo htmlspecialchars($ErrorMessageCheckStudentSimulation); ?>
-    <?php } ?><br><br>
-    <a href="CheckStudentSimulation.php">Start Simulation</a><br><br>
-    <a href="StudentUpdatePassword.php">Update Password</a><br><br>
-    <a href="StudentResponse.php">View Result</a><br><br>
-    <a href="logout.php">Log Out</a>
-    
+<body> 
+    <!-- this is body-->
+ <div class="container-fluid"> 
+          <div class="row">
+            <img class="responsive" src="img/background UI.svg"/>
+        </div>
+     <div class="row title">
+         <div class="col-md-10"><p class="ptitle"><img class="responsive" src="img/studentlogo.svg"width="80px"height="50px"/>Welcome Student<?php echo $_SESSION['username']; ?></p>
+         <?php if (!empty($ErrorMessageCheckStudentSimulation)) { ?>
+       <div class="alert alert-warning"><span class="glyphicon glyphicon-exclamation-sign"></span>&nbsp;<strong><?php echo htmlspecialchars($ErrorMessageCheckStudentSimulation); ?>
+   <br><br></strong></div> <?php } ?>
+         </div>
+         <div class="col-md-2">
+             <a href="http://localhost/Demo/logout.php" class="btn btn-lg">
+          <span class="glyphicon glyphicon-off"></span> Log Out
+        </a></div>
+     </div>
+     <div class="row">     
+<!--Simulation-->  
+<div id="startsimulation" class="col-md-4">
+    <img class="responsive" id="icon" src="img/icons1.svg"/>
+    <div class="paragraph"><p>
+        You have 20min to finish<br>
+        There will be sound during the simulation.<br>
+        Be Prepared！
+         </p></div>
+    <input name = 'Start Simulation' class="btn-block" type="submit" value="Start Simulation" onclick="location.href='http://localhost/Demo/CheckStudentSimulation.php';"></input>
+</div>
+<!--Feedback-->  
+  <div id="viewfeedback" class='col-md-4'><img class="responsive" id="icon" src="img/icons2.svg"/>
+      <div class="paragraph">
+        <p>
+        View your feedback here<br>
+        Teacher feedback is available<br>
+        <br>
+    </p></div>
+      <input name = 'Feedback' class="btn-block" type="submit" value="View Feedback" onclick="location.href='http://localhost/Demo/StudentResponse.php';"></div>
+<!--Account Management-->  
+ <div id="account" class="col-md-4">
+  <img class="responsive" id="icon" src="img/icons4.svg"/>
+  <div class="paragraph">
+    <p>
+        You can reset password <br>
+        <br>
+        <br>
+    </p></div>
+  <input name = 'Account' class="btn-block" type="submit" value="Manage Account" onclick="location.href='http://localhost/Demo/StudentUpdatePassword.php';"></input></div>
+  </div>
+</div>
+<footer class="footer">
+    <img src="img/Logo SHP.svg" height="40px"/>
+</footer>   
 </body>
 
 

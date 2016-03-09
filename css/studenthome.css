@@ -1,0 +1,97 @@
+body{
+padding-bottom:50px;
+}
+/*simulation.php*/
+.ptitle{
+    font-family: 'Source Sans Pro', sans-serif;
+    font-weight: 400; 
+    font-size:180%;
+}
+.title>img{
+       vertical-align:middle;
+}
+.title{
+    border-style: solid;
+    border-left:none;
+    border-right:none;
+    border-top:none;
+    border-bottom: 3px dotted #564644;
+}
+.col-md-2>a{
+        color:#564644;
+}
+.col-md-2>a:hover{
+        color:#76B84F;
+}
+#icon{
+    width: 100%;
+    height:250px;
+    -webkit-filter: drop-shadow(0px 5px 3px #888888);
+    filter: drop-shadow(0px 5px 3px #888888);
+}
+.paragraph{
+    height:80px;
+    font-family: 'Source Sans Pro', sans-serif;
+    font-weight: 400; 
+    font-size:120%;
+    text-align: center;
+    vertical-align:bottom;
+}
+/*simulation.php*/
+#simulation{
+   width:100%;
+   height:100%
+}
+.btn-block {
+background-color:transparent;
+color:#564644;
+border:3px solid #76B84F;
+border-radius: 5px;
+font-family: 'Source Sans Pro', sans-serif;
+font-weight: 400;
+font-size:165%;
+}
+
+.btn-block:hover,.btn-block:focus,.btn-block.active:focus{
+    background-color:#564644;
+    color:white;
+    border: #564644;
+    border-style: solid;
+    border-width: 3px;
+}
+footer{
+   position:fixed;
+   left:0px;
+   bottom:0px;
+   height:50px;
+   width:100%;
+background: rgba(255,255,255,1);
+background: -moz-linear-gradient(left, rgba(255,255,255,1) 0%, rgba(246,246,246,1) 32%, rgba(237,237,237,1) 100%);
+background: -webkit-gradient(left top, right top, color-stop(0%, rgba(255,255,255,1)), color-stop(32%, rgba(246,246,246,1)), color-stop(100%, rgba(237,237,237,1)));
+background: -webkit-linear-gradient(left, rgba(255,255,255,1) 0%, rgba(246,246,246,1) 32%, rgba(237,237,237,1) 100%);
+background: -o-linear-gradient(left, rgba(255,255,255,1) 0%, rgba(246,246,246,1) 32%, rgba(237,237,237,1) 100%);
+background: -ms-linear-gradient(left, rgba(255,255,255,1) 0%, rgba(246,246,246,1) 32%, rgba(237,237,237,1) 100%);
+background: linear-gradient(to right, rgba(255,255,255,1) 0%, rgba(246,246,246,1) 32%, rgba(237,237,237,1) 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ededed', GradientType=1 );
+}
+footer>img{
+       position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-right: -50%;
+        transform: translate(-50%, -50%)
+}
+.st8 {
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  animation: dash 5s linear infinite;
+}
+
+@keyframes dash {
+  from {
+    stroke-dashoffset: 1000;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+

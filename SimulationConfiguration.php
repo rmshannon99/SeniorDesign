@@ -55,15 +55,41 @@ if (isset($_POST['ConfigSubmit'])){
 <head>
 <meta charset="UTF-8">
 <title>Simulation Configuration</title>
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="css/studenthome.css">
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
+        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<meta charset="UTF-8">
 </head>
 <body>
     
 <!--    Display current configuration-->
-    
+     <div class="container-fluid"> 
+          <div class="row">
+              <img src="img/banner.svg" />
+</div>
+     <div class="row title">
+         <div class="col-md-8"><p class="ptitle"><img class="responsive" src="img/studentlogo.svg"width="80px"height="50px"/>Welcome Instructor<?php echo $_SESSION['username']; ?></p>
+         </div>
+         <div class="col-md-2">
+             <a href="http://localhost/Demo/AdminPage.php" class="btn btn-lg">
+          <span class="glyphicon glyphicon-home"></span> Home
+        </a></div>
+         <div class="col-md-2">
+             <a href="http://localhost/Demo/logout.php" class="btn btn-lg">
+          <span class="glyphicon glyphicon-off"></span> Log Out
+        </a></div>
+     </div>
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
     <h2 align="center"> Current infant and parent configuration: </h2>
-    <?php CurrentConfigDisplay($ConfigDisplay); ?><br><br>
-    <h3 align="center"> Or you wish to update: </h3>
+     <div class="table-responsive">
+    <?php CurrentConfigDisplay($ConfigDisplay); ?><br></div>
+
+         <h3 align="center"> Or you wish to update: </h3>
     
     
     <!--    This is simulation configuration section-->
@@ -85,7 +111,8 @@ if (isset($_POST['ConfigSubmit'])){
 <!--        Please set parent state:     <input type="range" name="ParentState" min="1" max="3" value="2" onchange="showValue3(this.value)">
         <span id="ParentState"></span><br><br>-->
         
-        <input name = 'ConfigSubmit' type="submit" value="Save">
+        <input class="btn btn-lg btn-success" name = 'ConfigSubmit' type="submit" value="Save">
+        <input class="btn btn-lg btn-primary" action="action" type="button" value="Back" onclick="history.go(-1);" />
         
     </form>
                 <!--    Javascript to get value of the slide bar's-->
@@ -109,8 +136,9 @@ if (isset($_POST['ConfigSubmit'])){
 //        }
         
         </script>
-
-    
+</div>
+  </div>
+     </div>
     
  
 

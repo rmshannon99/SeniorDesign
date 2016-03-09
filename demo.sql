@@ -1,30 +1,10 @@
--- phpMyAdmin SQL Dump
--- version 4.5.1
--- http://www.phpmyadmin.net
---
--- Host: 127.0.0.1
--- Generation Time: Mar 01, 2016 at 05:36 PM
--- Server version: 10.1.8-MariaDB
--- PHP Version: 5.6.14
+
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
 
---
--- Database: `demo`
---
-
--- --------------------------------------------------------
-
---
--- Table structure for table `baby_information`
---
 
 CREATE TABLE `baby_information` (
   `BabyInformationID` int(11) NOT NULL,
@@ -33,9 +13,6 @@ CREATE TABLE `baby_information` (
   `BabyInformation` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `baby_information`
---
 
 INSERT INTO `baby_information` (`BabyInformationID`, `SceneID`, `SceneOption`, `BabyInformation`) VALUES
 (1, 3, 'Tell me about Vicky''s birth history', 'She was born term and vaginal delivery. During delivery, she had runs of a fast heart rate and difficult time adjusting.She did not go home with me and stayed in the hospital for a week. They said her perfusion was not good. She was admitted to the NICU immediately after birth and put on antibiotics for a week. She had cultures done of her blood and spinal fluid; nothing grew.'),
@@ -76,11 +53,6 @@ INSERT INTO `baby_information` (`BabyInformationID`, `SceneID`, `SceneOption`, `
 (36, 7, 'Beta HCG', '<2.4'),
 (37, 7, 'CBC with diff', 'Normal');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `question_table`
---
 
 CREATE TABLE `question_table` (
   `ID` int(11) NOT NULL,
@@ -92,20 +64,12 @@ CREATE TABLE `question_table` (
   `CorrectOption` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `question_table`
---
 
 INSERT INTO `question_table` (`ID`, `Question`, `OptionA`, `OptionB`, `OptionC`, `OptionD`, `CorrectOption`) VALUES
 (1, 'What is your name?', 'Reed', 'Jason', 'Xiruo', 'Aleah', 'Reed'),
 (2, 'Where are you from?', 'UK', 'USA', 'China', 'Vietnam', 'USA'),
 (3, 'How are you you?', '18', '19', '20', '21', '21');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `scene_table`
---
 
 CREATE TABLE `scene_table` (
   `SceneID` int(11) NOT NULL,
@@ -130,10 +94,6 @@ CREATE TABLE `scene_table` (
   `R` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `scene_table`
---
-
 INSERT INTO `scene_table` (`SceneID`, `SceneInformation`, `A`, `B`, `C`, `D`, `E`, `F`, `G`, `H`, `I`, `J`, `K`, `L`, `M`, `N`, `O`, `P`, `Q`, `R`) VALUES
 (1, 'Vicky, a 6 month old female has just been brought by her parents into the ER.  The parents approach you, what do you do?', 'Greet the parents. "Hello, my name is _____. What brings you in today?"', 'Introduce yourself', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''),
 (2, 'We went to the pediatricians for a follow up from her ear infection. The doctor was concerned for mass in the abdomen. The doctor was also concerned because we mentioned that she doesn''t finish her bottle all the time and gets sweaty with feeds. He sent us to the Emergency room to check out this mass in the belly and to have her heart checked out as well. Does she have cancer? We are scared', 'I''m sure Vicky will be fine. Please take a seat', 'We''ll do everything we can to help her. Please take a seat and we will keep you updated', 'It is probably cancer', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''),
@@ -144,11 +104,6 @@ INSERT INTO `scene_table` (`SceneID`, `SceneInformation`, `A`, `B`, `C`, `D`, `E
 (7, 'Do you want to order any labs?', 'CBC with diff', 'BNP', 'CMP', 'PT/PTT', 'CRP', 'ESR', 'Amylase Lipase', 'Urinalysis', 'Alpha-1-Fetoprotein', 'Beta HCG', '', '', '', '', '', '', '', ''),
 (8, 'The parents run up to you as you look over the test and lab results. "Nobody will tell us what''s going on! What is happening with Vicky?". Here is your guess:', 'Vicky has Neuroblastoma.', 'Vicky has Wilm''s tumor.', 'Vicky has new onset heart failure.', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `simulation_configuration`
---
 
 CREATE TABLE `simulation_configuration` (
   `ConfigurationID` int(11) NOT NULL,
@@ -158,18 +113,8 @@ CREATE TABLE `simulation_configuration` (
   `ParentState` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `simulation_configuration`
---
-
 INSERT INTO `simulation_configuration` (`ConfigurationID`, `BloodPressure`, `HeartRate`, `AirwayRespiratory`, `ParentState`) VALUES
 (1, 57, 81, 67, 'Angry');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `student_response`
---
 
 CREATE TABLE `student_response` (
   `ID` int(11) NOT NULL,
@@ -180,11 +125,6 @@ CREATE TABLE `student_response` (
   `Feedback` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='This table stores student''s reponses';
 
--- --------------------------------------------------------
-
---
--- Table structure for table `student_response_new`
---
 
 CREATE TABLE `student_response_new` (
   `ID` int(11) NOT NULL,
@@ -194,10 +134,6 @@ CREATE TABLE `student_response_new` (
   `TextResponse` text NOT NULL,
   `Feedback` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `student_response_new`
---
 
 INSERT INTO `student_response_new` (`ID`, `SceneID`, `userID`, `ChosenOption`, `TextResponse`, `Feedback`) VALUES
 (11, 1, 15, 'Greet the parents. "Hello, my name is _____. What brings you in today?"', '', 'Common ! Please works !'),
@@ -230,11 +166,6 @@ INSERT INTO `student_response_new` (`ID`, `SceneID`, `userID`, `ChosenOption`, `
 (38, 7, 13, 'CMP', '', ''),
 (39, 8, 13, 'Vicky has Neuroblastoma.', '', '');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `user_information`
---
 
 CREATE TABLE `user_information` (
   `userID` int(11) NOT NULL,
@@ -244,10 +175,6 @@ CREATE TABLE `user_information` (
   `LastName` varchar(100) NOT NULL,
   `Email` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `user_information`
---
 
 INSERT INTO `user_information` (`userID`, `Username`, `Password`, `FirstName`, `LastName`, `Email`) VALUES
 (1, 'admin', 'asdasd', 'Nhan', 'Tran', 'ntt38@drexel.edu'),
@@ -260,95 +187,49 @@ INSERT INTO `user_information` (`userID`, `Username`, `Password`, `FirstName`, `
 (18, 'final', 'asdasd', 'asd', 'asd', 'abc@gmail.com'),
 (19, 'ntran', 'asdasd', 'asdasd', 'asdasd', 'emilhuy0506@gmail.com');
 
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `baby_information`
---
 ALTER TABLE `baby_information`
   ADD PRIMARY KEY (`BabyInformationID`);
 
---
--- Indexes for table `question_table`
---
+
 ALTER TABLE `question_table`
   ADD PRIMARY KEY (`ID`);
 
---
--- Indexes for table `scene_table`
---
 ALTER TABLE `scene_table`
   ADD PRIMARY KEY (`SceneID`);
 
---
--- Indexes for table `simulation_configuration`
---
 ALTER TABLE `simulation_configuration`
   ADD PRIMARY KEY (`ConfigurationID`);
 
---
--- Indexes for table `student_response`
---
 ALTER TABLE `student_response`
   ADD PRIMARY KEY (`ID`),
   ADD KEY `QuestionID` (`QuestionID`),
   ADD KEY `userID` (`userID`);
 
---
--- Indexes for table `student_response_new`
---
 ALTER TABLE `student_response_new`
   ADD PRIMARY KEY (`ID`),
   ADD KEY `SceneID` (`SceneID`),
   ADD KEY `userID` (`userID`);
 
---
--- Indexes for table `user_information`
---
 ALTER TABLE `user_information`
   ADD PRIMARY KEY (`userID`);
 
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `baby_information`
---
 ALTER TABLE `baby_information`
   MODIFY `BabyInformationID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
---
--- AUTO_INCREMENT for table `question_table`
---
+
 ALTER TABLE `question_table`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
---
--- AUTO_INCREMENT for table `scene_table`
---
+
 ALTER TABLE `scene_table`
   MODIFY `SceneID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
---
--- AUTO_INCREMENT for table `simulation_configuration`
---
+
 ALTER TABLE `simulation_configuration`
   MODIFY `ConfigurationID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
---
--- AUTO_INCREMENT for table `student_response`
---
+
 ALTER TABLE `student_response`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `student_response_new`
---
+
 ALTER TABLE `student_response_new`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
---
--- AUTO_INCREMENT for table `user_information`
---
+
 ALTER TABLE `user_information`
   MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

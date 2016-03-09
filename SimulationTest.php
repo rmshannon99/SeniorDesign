@@ -1,4 +1,3 @@
-<pre>
 <?php
 // This file is used to start the simulation test
 require_once 'database.php';
@@ -167,40 +166,70 @@ if(!isset($_SESSION['Scenes'])) { //Check to see if the data from the scene_tabl
     
     
 ?>
-</pre>
 
 <!DOCTYPE html>
 <html>
     
 <head>
 <meta charset="UTF-8">
-<title>SimulationQuestion</title>
-
+<title>Simulation Question</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="css/studenthome.css">
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
+        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 </head>
-<body>
 
+<body>
+<div class="container-fluid"> 
+          <div class="row">
+            <img class="responsive" src="img/banner.svg"/>
+        </div>
+     <div class="row title">
+         <div class="col-md-10"><p class="ptitle"><img class="responsive" src="img/studentlogo.svg"width="80px"height="50px"/>Welcome Student<?php echo $_SESSION['username']; ?></p>
+         <?php if (!empty($ErrorMessageCheckStudentSimulation)) { ?>
+       <div class="alert alert-warning"><span class="glyphicon glyphicon-exclamation-sign"></span>&nbsp;<strong><?php echo htmlspecialchars($ErrorMessageCheckStudentSimulation); ?>
+   <br><br></strong></div> <?php } ?>
+         </div>
+         <div class="col-md-2">
+             <a href="http://localhost/Demo/logout.php" class="btn btn-lg">
+          <span class="glyphicon glyphicon-off"></span> Log Out
+        </a></div>
+     </div>
+    <div class="row">
+     <div class="col-md-2"></div>
+       <div class="col-md-8">
+      <div class="progrss">
+          <br>
+      <div class="reponsive progress-bar progress-bar-success progress-bar-striped active " role="progressbar" aria-valuenow=" <?php echo $_SESSION['Counter']+1 ?>"
+  aria-valuemin="0" aria-valuemax="$_SESSION['SceneNumber']" style="width:<?php echo (($_SESSION['Counter']+1)/$_SESSION['SceneNumber'])*100; ?>%">
+          <h5 class="text-nowrap"> Part <?php echo $_SESSION['Counter']+1; ?>,<?php echo ($_SESSION['Counter']+1)*10; ?>%</h5></div></div></div>
+          <div class="col-md-2"></div></div>
+      <div class="row">
+     <div class="col-md-2"></div>
+       <div class="col-md-8">
     <?php
     
     //If the counter is less than or equal to the number of questions, it will display the question and options
     if($_SESSION['Counter'] <= $_SESSION['SceneNumber'] -1){ //because counter starts at 0, that's why number is subtracted 1
     $SceneDisplay = $_SESSION['Scenes'][$_SESSION['Counter']];   
-    
     ?>
-
-    <form action="SimulationTest.php" method="POST">
-        
-    <?php if (!empty($BabyInformation)){            
-            echo $BabyInformation['BabyInformation'];?>
-        <br><br>
-        <input type="radio" name="AskMore" value="AskMore" checked>Ask more question?<br>
-        <input type="radio" name="AskMore" value="MoveOn">Move on<br>
-        <textarea name="comment" rows="10" cols="90" placeholder="Please enter your comment" ></textarea>
-        <button name="submit" type="submit">Next</button>
+  <form role="form" action="SimulationTest.php" method="POST">
+  <div class="form-group">     
+      <h4><?php if (!empty($BabyInformation)){            
+        echo $BabyInformation['BabyInformation'];?>
+          <br></h4>
+        <div class="radio">
+            <label><input type="radio" name="AskMore" value="AskMore" checked>Ask more question?<br></label></div>
+        <div class="radio"><label><input type="radio" name="AskMore" value="MoveOn">Move on<br></label></div>
+        <textarea class="form-control" name="comment" rows="10" cols="90" placeholder="Please enter your comment" ></textarea>
+        <button class="btn-block"name="submit" type="submit">Next</button>
 
     <?php    } 
-        
         else{ ?>
-    <?php echo $SceneDisplay["SceneInformation"]; ?><br>    
+       <h4><?php echo $SceneDisplay["SceneInformation"]; ?></h4>
+        
     <?php if($SceneDisplay["B"]=='') {
         $SceneRange = range('A','A'); //Range for SceneID = 1 and 4
             foreach ($SceneRange as $letter){ ?>
@@ -307,14 +336,11 @@ if(!isset($_SESSION['Scenes'])) { //Check to see if the data from the scene_tabl
             }
         } ?>
         <br><br>
-        <textarea name="comment" rows="10" cols="90" placeholder="Please enter your comment" ></textarea>
-        <button name="submit" type="submit">Next</button>
+        <textarea class="form-control"name="comment" rows="10" cols="90" placeholder="Please enter your comment" ></textarea>
+        <button class="btn-block" name="submit" type="submit">Next</button>
     <?php 
     }
-            
     ?>   
-    
-    
     </form>
 <?php
     }
@@ -324,12 +350,18 @@ if(!isset($_SESSION['Scenes'])) { //Check to see if the data from the scene_tabl
         
     }
 ?>
-
+  </div>
+  </div>
+     <div class="col-md-2"></div>
+      </div>
+</div>
 <!--    Play infant sound-->
 <!--<audio controls loop hidden="true" autoplay="true">
     <source src="./audio/crying.mp3" type="audio/mpeg">
 </audio>-->
-
+<footer class="footer">
+     <img src="img/Logo SHP.svg" height="40px"/>
+</footer>
 </body>
 
 
